@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WITHER_AI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        header {
+            background: #1e293b;
+            padding: 1rem 2rem;
+            text-align: center;
+            border-bottom: 1px solid #334155;
+        }
+        header h1 {
+            color: #38bdf8;
+            font-size: 1.5rem;
+        }
+        #chat-container {
+            flex: 1;
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            overflow: hidden;
+        }
+        #chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            scroll-behavior: smooth;
+        }
+        .message {
+            max-width: 75%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+        .user-message {
+            background: #38bdf8;
+            color: #0f172a;
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+        }
+        .ai-message {
+            background: #1e293b;
+            color: #f8fafc;
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+            border: 1px solid #334155;
+        }
+        #chat-form {
+            display: flex;
+            padding: 15px;
+            background: #1e293b;
+            border-top: 1px solid #334155;
+            gap: 10px;
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+            border-radius: 12px 12px 0 0;
+        }
+        #user-input {
+            flex: 1;
+            padding: 12px 16px;
+            background: #0f172a;
+            border: 1px solid #475569;
+            color: white;
+            border-radius: 8px;
+            outline: none;
+            font-size: 1rem;
+        }
+        #user-input:focus {
+            border-color: #38bdf8;
+        }
+        button {
+            background: #38bdf8;
+            color: #0f172a;
+            border: none;
+            padding: 0 20px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #0ea5e9;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>WITHER_AI</h1>
+    </header>
+
+    <div id="chat-container">
+        <div id="chat-messages">
+            <div class="message ai-message">Salom! Men sizning shaxsiy sun'iy intellekt yordamchingizman. Menga istalgan savolingizni berishingiz mumkin.</div>
+        </div>
+    </div>
+
+    <form id="chat-form">
+        <input type="text" id="user-input" placeholder="Xabaringizni yozing..." autocomplete="off" required>
+        <button type="submit">Yuborish</button>
+    </form>
+
+    <script>
+        const chatMessages = document.getElementById('chat-messages');
+        const chatForm = document.getElementById('chat-form');
+        const userInput = document.getElementById('user-input');
+
+        chatForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const messageText = userInput.value.trim();
+            if (!messageText) return;
+
+            // Foydalanuvchi xabarini chiqarish
+            appendMessage(messageText, 'user-message');
+            userInput.value = '';
+
+            // AI javobini simulyatsiya qilish (Bu yerga real API ulanishi mumkin)
+            setTimeout(() => {
+                const aiResponse = generateAIResponse(messageText);
+                appendMessage(aiResponse, 'ai-message');
+            }, 600);
+        });
+
+        function appendMessage(text, className) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', className);
+            messageDiv.textContent = text;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function generateAIResponse(query) {
+            // Oddiy mantiqiy javoblar generatori
+            const q = query.toLowerCase();
+            if (q.includes('salom') || q.includes('assalomu alaykum')) {
+                return "Valaykum assalom! Sizga qanday yordam bera olaman?";
+            } else if (q.includes('isming nima') || q.includes('sen kimsan')) {
+                return "Men siz yaratgan veb-sahifadagi sun'iy intellekt yordamchisiman.";
+            } else if (q.includes('qalesiz') || q.includes('ishlar')) {
+                return "Rahmat, hammasi joyida! Siz bilan suhbatlashishdan xursandman.";
+            } else {
+                return `Sizning "${query}" degan so'rovingizni qabul qildim. Uni yanada rivojlantirish uchun OpenAI yoki boshqa AI API'larini ulashingiz mumkin.`;
+            }
+        }
+    </script>
+</body>
+</html>
